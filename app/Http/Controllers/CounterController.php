@@ -29,14 +29,14 @@ class CounterController extends Controller
             $data = (new Counters)->find(1);
             if ($data == null) {
                 $count = 0;
-            }else {
+            } else {
                 $count = $data["count"];
             }
             $res = [
                 "code" => 0,
-                "data" =>  $count
+                "data" => $count
             ];
-            Log::info('getCount rsp: '.json_encode($res));
+            Log::info('getCount rsp: ' . json_encode($res));
             return response()->json($res);
         } catch (Error $e) {
             $res = [
@@ -44,7 +44,7 @@ class CounterController extends Controller
                 "data" => [],
                 "errorMsg" => ("查询计数异常" . $e->getMessage())
             ];
-            Log::info('getCount rsp: '.json_encode($res));
+            Log::info('getCount rsp: ' . json_encode($res));
             return response()->json($res);
         }
     }
@@ -63,24 +63,24 @@ class CounterController extends Controller
                 $data = (new Counters)->find(1);
                 if ($data == null) {
                     $count = 1;
-                }else {
+                } else {
                     $count = $data["count"] + 1;
                 }
-    
+
                 $counters = new Counters;
                 $counters->updateOrCreate(['id' => 1], ["count" => $count]);
-            }else if ($action == "clear") {
+            } else if ($action == "clear") {
                 Counters::destroy(1);
                 $count = 0;
-            }else {
-                throw '参数action错误';
+            } else {
+                throw new Error('参数action错误');
             }
 
             $res = [
                 "code" => 0,
-                "data" =>  $count
+                "data" => $count
             ];
-            Log::info('updateCount rsp: '.json_encode($res));
+            Log::info('updateCount rsp: ' . json_encode($res));
             return response()->json($res);
         } catch (Exception $e) {
             $res = [
@@ -88,7 +88,7 @@ class CounterController extends Controller
                 "data" => [],
                 "errorMsg" => ("更新计数异常" . $e->getMessage())
             ];
-            Log::info('updateCount rsp: '.json_encode($res));
+            Log::info('updateCount rsp: ' . json_encode($res));
             return response()->json($res);
         }
     }
